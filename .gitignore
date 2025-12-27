@@ -1,0 +1,13 @@
+# data
+data/raw/
+data/processed/
+
+# runtime artifacts
+artifacts/
+__pycache__/
+*.pyc
+
+# env
+.env
+.venv/
+venv/

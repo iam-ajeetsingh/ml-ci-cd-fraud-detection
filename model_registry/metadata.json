@@ -1,0 +1,20 @@
+{
+  "current_model": "v0.1.0",
+  "artifact_path": "artifacts/production/model_v0.1.0.joblib",
+  "metrics": {
+    "val_roc_auc": 0.9682289682934511,
+    "val_precision_at_min_recall": 0.5504587155963303,
+    "guardrail_min_recall": 0.8
+  },
+  "created_at": "2025-12-27T09:33:46.129242+00:00",
+  "promotion_reason": "No current model in registry; bootstrapping baseline.",
+  "evaluation_summary": {
+    "passed": true,
+    "delta": null,
+    "policy": {
+      "min_auc_improvement": 0.015,
+      "min_recall_guardrail": 0.8
+    },
+    "evaluated_at": "2025-12-27T09:32:08.862925+00:00"
+  }
+}
