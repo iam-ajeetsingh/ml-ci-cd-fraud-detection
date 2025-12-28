@@ -57,7 +57,7 @@ jobs:
 
       - name: Train candidate model
         run: |
-          python -m training/train.py
+          python training/train.py
 
       - name: Evaluate promotion gate
         continue-on-error: true
