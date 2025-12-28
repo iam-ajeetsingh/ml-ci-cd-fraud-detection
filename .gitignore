@@ -3,7 +3,10 @@ data/raw/
 data/processed/
 
 # runtime artifacts
-artifacts/
+artifacts/candidate_*
+artifacts/evaluation_result.json
+
+
 __pycache__/
 *.pyc
 
