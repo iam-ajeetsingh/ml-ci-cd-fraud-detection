@@ -3,6 +3,10 @@ import os
 import shutil
 from datetime import datetime, timezone
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 
 ARTIFACT_DIR = os.getenv("ARTIFACT_DIR", "artifacts")
 EVAL_RESULT_PATH = os.path.join(ARTIFACT_DIR, "evaluation_result.json")

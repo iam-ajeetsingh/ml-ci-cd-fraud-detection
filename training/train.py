@@ -9,6 +9,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, precision_recall_curve
 from sklearn.model_selection import train_test_split
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from training.metrics import precision_at_min_recall
 
 RANDOM_SEED = 42

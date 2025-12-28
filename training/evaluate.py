@@ -13,6 +13,10 @@ EVAL_RESULT_PATH = os.path.join(ARTIFACT_DIR, "evaluation_result.json")
 MIN_AUC_IMPROVEMENT = float(os.getenv("MIN_AUC_IMPROVEMENT", "0.015"))  # 1.5% absolute AUC
 MIN_RECALL_GUARDRAIL = float(os.getenv("MIN_RECALL_GUARDRAIL", "0.80"))
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 
 def load_json(path: str) -> dict:
     if not os.path.exists(path):
