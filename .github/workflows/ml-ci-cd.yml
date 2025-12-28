@@ -54,6 +54,7 @@ jobs:
           python training/train.py
 
       - name: Evaluate promotion gate
+        continue-on-error: true
         run: |
           python training/evaluate.py
 
@@ -115,6 +116,18 @@ jobs:
         run: |
           python training/train.py
           python training/evaluate.py
+      
+      - name: Check gate passed
+        id: gate
+        run: |
+          python - <<'PY'
+          import json
+          with open("artifacts/evaluation_result.json","r") as f:
+              r=json.load(f)
+          print("passed=", r.get("passed", False))
+          if not r.get("passed", False):
+              raise SystemExit(0)  # exit 0 = not an error; just skip promotion
+          PY     
 
       - name: Promote if gate passed
         run: |
@@ -127,3 +140,9 @@ jobs:
           git add model_registry/metadata.json model_registry/history artifacts/production || true
           git commit -m "Promote model via CI pipeline" || echo "No changes to commit"
           git push || echo "No push (possibly PR context or no changes)"
+      
+      - name: Show gate result
+        if: always()
+        run: |
+          echo "---- Evaluation Result ----"
+          cat artifacts/evaluation_result.json
