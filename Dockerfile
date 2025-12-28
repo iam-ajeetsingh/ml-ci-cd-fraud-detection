@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install inference dependencies
-COPY inference/requirements.txt /app/requirements.txt
+COPY inference/requirements-inf.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Copy app code
