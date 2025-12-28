@@ -118,13 +118,14 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import os
           with open("artifacts/evaluation_result.json","r") as f:
               r = json.load(f)
           passed = bool(r.get("passed", False))
           print("passed =", passed)
           # expose to later steps
           with open(os.environ["GITHUB_OUTPUT"], "a") as out:
-              out.write(f"passed={str(passed).lower()}\\n")
+              out.write(f"passed={str(passed).lower()}\n")
           PY
 
       - name: Promote model (only if gate passed)
@@ -139,5 +140,5 @@ jobs:
           git config user.email "github-actions@users.noreply.github.com"
           git add model_registry/metadata.json model_registry/history artifacts/production || true
           git commit -m "Promote model via CI pipeline" || echo "No changes to commit"
-          git push
+          git push origin main
 
