@@ -318,3 +318,81 @@ Now that you have a container, the next step is **real CI/CD**:
 
 
 
+Phase 2.1 — The dataset problem (CI can’t access your local CSV)
+
+(best for CI): download dataset during workflow using Kaggle API
+Store Kaggle credentials as GitHub Secrets
+Workflow downloads creditcard.csv at runtime
+
+
+Phase 2.2 — Add GitHub Secrets
+
+In your GitHub repo:
+Settings → Secrets and variables → Actions → New repository secret
+Create:
+KAGGLE_USERNAME
+KAGGLE_KEY
+These values come from your Kaggle API token (kaggle.json).
+
+
+Phase 2.3 — Create the GitHub Actions workflow
+What this workflow does
+
+PRs: trains + evaluates + uploads artifacts (but does not promote)
+Push to main: trains + evaluates + promotes, then commits the updated registry + production artifact
+
+Phase 2.4 — One important adjustment
+
+Right now, your workflow commits artifacts/production/... back into the repo. That is okay for a portfolio project (and actually makes it easy to show version history).
+
+In real companies you’d push artifacts to:
+S3 / GCS / Artifact Registry / MLflow, etc.
+
+
+## ✅ Phase 2 — GitHub Actions CI
+
+This project includes a GitHub Actions workflow that runs the ML lifecycle automatically:
+
+- Download dataset from Kaggle (via GitHub Secrets)
+- Train candidate model
+- Evaluate promotion gate (ROC-AUC + guardrail)
+- Upload training artifacts
+- On pushes to `main`, automatically promote the model and update the registry
+
+Workflow file:
+- `.github/workflows/ml-ci.yml`
+
+### Required GitHub Secrets
+- `KAGGLE_USERNAME`
+- `KAGGLE_KEY`
+
+
+
+Next step (Phase 2.7)
+
+Add a lightweight test suite so CI isn’t just “train succeeded.”
+We’ll add:
+
+unit test for metric functions
+test that /health works (FastAPI test client)
+test that registry file is valid JSON and points to an artifact
+
+
+Phase 2.7 — Add tests + make CI meaningful
+Right now CI proves “code runs.” We’ll make it prove “behavior is correct.”
+We’ll add 3 lightweight tests that run fast and don’t need the Kaggle dataset:
+
+Metric helper correctness (precision@min_recall behavior)
+Registry sanity (valid JSON + required keys)
+FastAPI health endpoint returns expected fields (without actually loading a real model)
+
+Then update GitHub Actions to run pytest before training.
+
+
+Phase 2.8: Docker build + container smoke test in GitHub Actions :
+
+
+Phase 2.9: push image to a registry: 
+
+
+Phase 3: deploy to Cloud Run : 

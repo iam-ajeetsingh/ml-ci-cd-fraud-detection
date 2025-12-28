@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, precision_recall_curve
 from sklearn.model_selection import train_test_split
 
+from training.metrics import precision_at_min_recall
 
 RANDOM_SEED = 42
 TARGET_COL = "Class"
@@ -18,7 +19,7 @@ ARTIFACT_DIR = os.getenv("ARTIFACT_DIR", "artifacts")
 CANDIDATE_MODEL_PATH = os.path.join(ARTIFACT_DIR, "candidate_model.joblib")
 CANDIDATE_METRICS_PATH = os.path.join(ARTIFACT_DIR, "candidate_metrics.json")
 
-
+'''
 def precision_at_min_recall(y_true: np.ndarray, y_proba: np.ndarray, min_recall: float) -> float:
     """
     Returns the best precision achievable with recall >= min_recall by sweeping thresholds.
@@ -30,7 +31,7 @@ def precision_at_min_recall(y_true: np.ndarray, y_proba: np.ndarray, min_recall:
     if not np.any(mask):
         return 0.0
     return float(np.max(precision[mask]))
-
+'''
 
 def main():
     os.makedirs(ARTIFACT_DIR, exist_ok=True)
